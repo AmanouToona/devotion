@@ -18,7 +18,7 @@ for i in range(N):
         if ans <= S[j]:
             ans = S[j] + C[j]
         else:
-            wait = ans % F[j]
+            wait = (F[j] - ans % F[j]) % F[j]
             ans += wait + C[j]
         
     print(ans)
