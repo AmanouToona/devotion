@@ -33,7 +33,7 @@ int main() {
         ans = min(n - even.at(0) - odd.at(1), n - even.at(1) - odd.at(0));
     }
     else {
-        ans = n - even.at(0) - even.at(0);
+        ans = n - even.at(0) - odd.at(0);
     }
 
     cout << ans << endl;
