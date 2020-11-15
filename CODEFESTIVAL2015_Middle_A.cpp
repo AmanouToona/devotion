@@ -23,7 +23,7 @@ int main() {
     ans = ceil(ans);
 
     if (ans < 0) ans = 0;
-    if (N - 1 >= K - 1 && S.at(K - 1) >= ans) ans = 0;
+    if (N - 2 >= K - 1 && S.at(K - 1) >= ans) ans = 0;
     if (ans > M) ans = -1;
 
     cout << ans << endl;
