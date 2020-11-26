@@ -2,7 +2,7 @@
 using namespace std;
 
 
-bool solve (int N, int K, int now, vector<int> &A, vector<vector<int>> &T) {
+bool solve (int N, int K, vector<int> &A, vector<vector<int>> &T) {
     bool res = true;
     for (int k = 0; k < K; k++) {
         A.push_back(k);
@@ -13,7 +13,7 @@ bool solve (int N, int K, int now, vector<int> &A, vector<vector<int>> &T) {
             }
             if (ans == 0) return false;
         } else {
-        res = res && solve(N, K, now++, A, T); 
+        res = res && solve(N, K, A, T); 
         }
         if (res == false) return res;
         A.pop_back();
@@ -37,7 +37,7 @@ int main() {
     }
 
     vector<int> A;
-    if (solve(N, K, 0, A, T)) {
+    if (solve(N, K, A, T)) {
         cout << "Nothing" << endl;
     } else{
         cout << "Found" << endl;
