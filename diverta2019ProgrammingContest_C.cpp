@@ -11,7 +11,7 @@ int main() {
         cin >> S;
 
         for (int i = 0; i < S.size() - 1; i++) {
-            if (S[i] == 'A' && S[i + 1] == 'B') ans++;            
+            if (S[i] == 'A' && S[i + 1] == 'B') ans++;
         }
         
         if (S[0] == 'B') frontB++;
@@ -20,7 +20,7 @@ int main() {
     }
 
     ans += min(frontB, rearA);
-    if (both == rearA && both == frontB) ans--;
+    if (both == rearA && both == frontB && ans != 0 && rearA >= 2) ans--;
 
     cout << ans << endl;
 }
