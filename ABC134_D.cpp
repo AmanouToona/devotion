@@ -15,7 +15,7 @@ int main() {
     for (int i = N - 1; i >= 0; i--) {
         int sum_ball = 0;
         for (int j = i; j < N; j += i + 1) {
-            sum_ball += A[i];
+            sum_ball += A[j];
         }
         if (sum_ball % 2 != a[i]) A[i] = 1;
     }
