@@ -24,7 +24,7 @@ int main() {
 
     int ans = 1;
     for (int i = 0; i < A.size(); i++) {
-        if (N % 2 == 1 && i == 1) continue;
+        if (N % 2 == 1 && i == 0) continue;
         ans *= 2;
         ans %= mod;
     }
