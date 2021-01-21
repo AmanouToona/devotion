@@ -8,20 +8,17 @@ int main() {
     int ans = 100;
     for (int i = 0; i < 26; i++) {
         int single = i + 'a';
-        
-        int streak = 0, max_streak = 0;
-        for (auto j: s) {
-            if (j == single) {
-                max_streak = max(max_streak, streak);
-                streak = 0;
-            } else {
-                streak ++;
-            }
+
+        int max_streak = 0;
+        for (int j = 0; j < s.size(); j++) {
+            
+            int jj = j;
+            while(j < s.size() && s[j] != i + 'a') j++;
+            max_streak = max(max_streak, j - jj);
+
         }
-        max_streak = max(max_streak, streak);
 
         ans = min(ans, max_streak);
     }
-
     cout << ans << endl;
 }
