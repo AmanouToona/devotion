@@ -12,13 +12,12 @@ int main() {
         bucket[s - 'a'] += 1;
     }
 
-    int ans = 1;
+    long long ans = 1;
     for (auto b: bucket) {
         ans *= b;
         ans %= mod;
     }
 
-    if (ans == 0) ans++;
     cout << ans - 1<< endl;
 
 }
