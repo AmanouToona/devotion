@@ -5,25 +5,27 @@ tuple<int, int, int> bfs(vector<string> table, int sh, int sw) {
     int H, W;
     H = table.size();
     W = table[0].size();
-
-    queue<vector<int>> que;
-    que.push({sh, sw, 0});
-
     vector<vector<bool>> fp(H, vector<bool>(W, false));
+
+    queue<array<int, 3>> que;
+    que.push({sh, sw, 0});
 
     const int dw[4] = {1, 0, -1, 0};
     const int dh[4] = {0, 1, 0, -1};
     tuple<int, int, int> res;
+
     while(!que.empty()) {
-        auto [uh, uw, dist] = que.front();
+        auto [uh, uw, dist] = que.front();  que.pop();
         res = make_tuple(uh, uw, dist);
-        que.pop();
+
         for (int i = 0; i < 4; i++) {
-            int vh = uh + dh[i];
+            int vh; 
+            vh = uh + dh[i];
             int vw = uw + dw[i];
             
             if (vh >= H || vh < 0|| vw >= W || vw < 0) continue;
             if (table[vh][vw] == '#') continue;
+            if (fp[vh][vw] == true) continue;
 
             fp[vh][vw] = true;
             que.push({vh, vw, dist + 1});
@@ -55,6 +57,10 @@ int main() {
     }
 
     //  bfs を 2回行って最遠点を求める
+    auto [s_h2, s_w2, dist2] = bfs(table, s_h, s_w);
 
+    auto [g_h3, g_w3, dist3] = bfs(table, s_h2, s_w2);
+
+    cout << dist3 << endl;
 
 }
