@@ -9,6 +9,7 @@ tuple<int, int, int> bfs(vector<string> table, int sh, int sw) {
 
     queue<array<int, 3>> que;
     que.push({sh, sw, 0});
+    fp[sh][sw] = true;
 
     const int dw[4] = {1, 0, -1, 0};
     const int dh[4] = {0, 1, 0, -1};
@@ -19,8 +20,7 @@ tuple<int, int, int> bfs(vector<string> table, int sh, int sw) {
         res = make_tuple(uh, uw, dist);
 
         for (int i = 0; i < 4; i++) {
-            int vh; 
-            vh = uh + dh[i];
+            int vh = uh + dh[i];
             int vw = uw + dw[i];
             
             if (vh >= H || vh < 0|| vw >= W || vw < 0) continue;
