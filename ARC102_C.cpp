@@ -6,7 +6,7 @@ int main() {
     int N, K;
     cin >> N >> K;
 
-    vector<int> num(K, 0);
+    vector<ll> num(K, 0);
 
     for (int i = 1; i <= N; i++) {
         num[i % K]++;
