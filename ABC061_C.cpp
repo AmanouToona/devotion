@@ -3,22 +3,29 @@ using namespace std;
 using ll = long long;
 
 int main() {
-    int N, K;
+    ll N, K;
     cin >> N >> K;
 
-    vector<pair<int, int>> numbers(N, pair<int, int>());
-    for (int i = 0; i < N; i++) {
+    vector<pair<ll, ll>> numbers(N, pair<ll, ll>());
+    for (ll i = 0; i < N; i++) {
         cin >> numbers[i].first >> numbers[i].second;
     }
 
     sort(numbers.begin(), numbers.end());
 
-    int total_num = 1;
-    for(auto [a, b]: numbers) {
-        total_num += b;
+    ll total_num = 0;
+    for(auto number: numbers) {
+        total_num += number.second;
         if (total_num >= K) {
-            cout << a << endl;
+            cout << number.first << endl;
             return 0;
         }
     }
 }
+
+/*
+3 6
+3 2
+2 3
+1 1
+*/
