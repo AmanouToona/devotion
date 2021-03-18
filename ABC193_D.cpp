@@ -49,17 +49,17 @@ int main() {
         tot_num[t - 1]--;
     }
 
-    double win_case = 0, lose_case = 0;
+    ll win_case = 0, lose_case = 0;
     for (int s = 1; s <= 9; s++) {
         for (int t = 1; t <= 9; t++) {
             si.push_back(s);
             ti.push_back(t);
 
-            int num_case = 0;
+            ll num_case = 0;
             if (s == t) {
-                num_case = tot_num[s - 1] * (tot_num[s - 1] - 1);
+                num_case = 1LL * tot_num[s - 1] * (tot_num[s - 1] - 1);
             } else {
-                num_case = tot_num[s - 1] * tot_num[t - 1];
+                num_case = 1LL *tot_num[s - 1] * tot_num[t - 1];
             }
 
             if (win(si, ti) == true) {win_case += num_case;} 
