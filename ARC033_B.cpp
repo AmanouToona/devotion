@@ -6,7 +6,7 @@ int main() {
     int na, nb;
     cin >> na >> nb;
 
-    set<int> a;
+    unordered_set<int> a;
     int numerator=0, denominator=na;
 
     for (int i = 0; i < na; i++) {
@@ -18,7 +18,8 @@ int main() {
     for (int i = 0; i < nb; i++) {
         int bi;
         cin >> bi;
-        if (a.find(bi) != a.end()) numerator++;
+        printf("count%d\n", a.count(bi));
+        if (a.count(bi)) numerator++;
         else denominator++;
     }
 
