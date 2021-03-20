@@ -18,7 +18,6 @@ int main() {
     for (int i = 0; i < nb; i++) {
         int bi;
         cin >> bi;
-        printf("count%d\n", a.count(bi));
         if (a.count(bi)) numerator++;
         else denominator++;
     }
