@@ -8,7 +8,7 @@ void sieve(int N, vector<int> &res) {
     //return vector of prime numbers
     vector<bool> prime(N + 1, true);
 
-    for (int i = 2; i < N; i++){
+    for (int i = 2; i <= N; i++){
         if (prime[i]) res.push_back(i);
 
         int j = i * 2;
