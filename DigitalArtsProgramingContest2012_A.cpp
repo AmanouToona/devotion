@@ -12,7 +12,8 @@ int main() {
         if (S[i] == ' ') {
             s.push_back(temp);
             temp.clear();
-        } else {temp.push_back(S[i]);
+        } else {
+            temp.push_back(S[i]);
         }
     }
     s.push_back(temp);
@@ -28,6 +29,9 @@ int main() {
     bool flag = true;
     for (int word_no = 0; word_no < s.size(); word_no++) {
         string word = s[word_no];
+
+        bool flag = false;
+
         for(auto ng: NG) {
             flag = true;
             if (word.size() != ng.size()) {
@@ -39,14 +43,14 @@ int main() {
                 if (word[i] != ng[i]) flag = false;
             }
 
-            if (flag) {
-                for (int i = 0; i < word.size(); i++) {
-                    cout << '*';
-                }
-                break;
-            }
+            if (flag) break;
         }
-        if (!flag) {
+
+        if (flag) {
+            for (int i = 0; i < word.size(); i++) {
+                cout << '*';
+            }
+        } else {
             cout << word;
         }
 
