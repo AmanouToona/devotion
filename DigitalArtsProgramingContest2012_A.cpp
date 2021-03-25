@@ -26,7 +26,6 @@ int main() {
         cin >> NG[i];
     }
 
-    bool flag = true;
     for (int word_no = 0; word_no < s.size(); word_no++) {
         string word = s[word_no];
 
