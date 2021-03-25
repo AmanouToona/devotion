@@ -4,6 +4,7 @@ using ll = long long;
 
 int H, W;
 vector<string> A;
+vector<vector<bool>> fp(8, vector<bool>(8));
 
 
 bool dfs(int h, int w) {
@@ -12,8 +13,17 @@ bool dfs(int h, int w) {
     if (h == H - 1 && w == W - 1) return true;
 
     if (h + 1 < H && w + 1 < W && A[h + 1][w] == '#' && A[h][w + 1] == '#') return false;
+    if (h - 1 > 0 && w - 1 > 0 && A[h - 1][w] == '#' && A[h][w - 1] == '#') return false;
 
-    return dfs(h + 1, w) || dfs(h, w + 1);
+    if (dfs(h + 1, w)) {
+        fp[h + 1][w] = true;
+        return true;
+    } else if (dfs(h, w + 1)) {
+        fp[h][w + 1] = true;
+        return true;
+    }
+
+    return false;
 
 }
 
@@ -26,7 +36,20 @@ int main() {
         cin >> input;
         A.push_back(input);
     }
+    fp[0][0] = true;
+    if (!dfs(0, 0)) {
+        cout << "Impossible" << endl;
+        return 0;
+    }
+    for (int h = 0; h < H; h++) {
+        for (int w = 0; w < W; w++) {
+            if (A[h][w] == '.') continue;
+            if (!fp[h][w]) {
+                cout << "Impossible" << endl;
+                return 0;
+            }
+        }
+    }
 
-    if (dfs(0, 0)) {cout << "Possible" << endl;}
-    else {cout << "Impossible" << endl;}
+    cout << "Possible" << endl;
 }
