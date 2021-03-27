@@ -25,6 +25,10 @@ int main() {
         cout << P << endl;
         return 0;
     }
+    if (N > 50) {
+        cout << 1 << endl;
+        return 0;
+    }
 
     while (1) {
         loop_ans++;
@@ -36,3 +40,7 @@ int main() {
     cout << final_ans << endl;
 
 }
+
+/*
+304653014089 420894703852
+*/
