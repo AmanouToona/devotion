@@ -35,14 +35,12 @@ int main() {
 
         if (s[0][0] == '0' || s[1][0] == '0' ||s[2][0] == '0') continue;
 
-        if (stoi(s[0]) + stoi(s[1]) == stoi(s[2])) {
+        if (stoll(s[0]) + stoll(s[1]) == stoll(s[2])) {
             for (int i = 0; i < 3; i++) {
                 cout << s[i] << endl;
             }
             return 0;
         }
-
-
     } while(next_permutation(num.begin(), num.end()));
 
     cout << "UNSOLVABLE" << endl;
