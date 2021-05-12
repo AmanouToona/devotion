@@ -75,7 +75,7 @@ int main() {
                 if (r + dw[i] < 0 || r + dw[i] >= H) continue;
                 if (c + dh[i] < 0 || c + dh[i] >= W) continue;
                 if (red[r + dw[i]][c + dh[i]]) {
-                    Square.unite(r * H + c, (r + dw[i]) * H + c + dh[i]);
+                    Square.unite(r * W + c, (r + dw[i]) * W + c + dh[i]);
                 }
             }
 
@@ -84,7 +84,7 @@ int main() {
             cin >> ra >> ca >> rb >> cb;
             ra--, ca--, rb--, cb--;
 
-            bool can = Square.same(ra * H + ca, rb * H + cb);
+            bool can = Square.same(ra * W + ca, rb * W + cb);
             can = (can && red[ra][ca] && red[rb][cb]);
             if (can) {
                 cout << "Yes" << endl;
