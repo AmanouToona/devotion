@@ -2,9 +2,42 @@
 using namespace std;
 using ll = long long;
 
+template <typename T>
+struct BIT {
+    // データ構造は 1-indexed であることに注意すること
+
+    int n;
+    vector<T> bit;
+
+    BIT (int N) {
+        n = N;
+        bit = vector<T>(n, 0);
+    }
+
+    void add (int i, T x) {
+        // 位置i に xを加算する処理
+        for (int idx = i; idx < n; idx += (idx & -idx)) {
+            bit[idx] += x;
+        }
+    }
+
+    T sum(int i) {
+        // 位置i までの総和を取得する処理
+        T res = 0;
+        for (int idx = i; idx > 0; idx -= (idx & -idx)) {
+            res += bit[idx];
+        }
+        return res;
+    }
+};
+
+
+
 int main() {
     int N, M;
     cin >> N >> M;
+
+    ll ans = 1LL * M * (M - 1) / 2;
 
     vector<int> L(M), R(M);
     for (int i = 0; i < M; i++) {
@@ -52,17 +85,18 @@ int main() {
     }
 
     sort(rl.begin(), rl.end());
-    vector<int> cnt(N, 0);
+
+    BIT<int> bit(N);
     ll ans_3 = 0;
     for (int i = 0; i < M; i++) {
         ll cr = rl[i].first, cl = rl[i].second;
-        for (int j= cl + 1; j < N; j++) {
-            ans_3 += cnt[j];
-        }
-        cnt[cl]++;
+        cr++; cl++;
+        ans_3 += i - bit.sum(cl);
+        bit.add(cl, 1);
     }
 
-    ll ans = 1LL * M * (M - 1) / 2 - ans_1 - ans_2 - ans_3;
+
+    ans -=  ans_1 + ans_2 + ans_3;
 
     cout << ans << endl;
 
