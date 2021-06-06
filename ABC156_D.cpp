@@ -55,6 +55,6 @@ int main () {
     // cout << nca << endl;
     // cout << ncb << endl;
 
-    cout << (ans - nca - ncb + MOD) % MOD << endl;
+    cout << (ans - nca - ncb + 2 * MOD) % MOD << endl;
 
 }
