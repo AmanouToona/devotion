@@ -57,7 +57,6 @@ int main() {
     for (ll i = 0; i < (1 << H * W); i++) {
         if (check(C, i, H, W)) ans++;
         cout << i << endl;
-        // ans %= MOD;
     }
 
     cout << ans << endl;
