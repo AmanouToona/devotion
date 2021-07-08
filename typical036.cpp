@@ -17,7 +17,6 @@ int main() {
         Y.push_back(x + y);
     }
 
-    sort(P.begin(),P.end());
     sort(X.begin(), X.end());
     sort(Y.begin(), Y.end());
 
