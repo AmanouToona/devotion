@@ -17,6 +17,7 @@ int main() {
 
         if (A == i || B == i) {
             q.push(i);
+            used[i] = true;
         }
         g[A].push_back(i);
         g[B].push_back(i);
@@ -27,7 +28,6 @@ int main() {
         int u = q.front();
         q.pop();
 
-        used[u] = true;
         ans.push_back(u);
 
         for (int v: g[u]) {
