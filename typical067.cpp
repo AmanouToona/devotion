@@ -30,38 +30,41 @@ ll vec2num(vector<int> val) {
 }
 
 
-ll base_number_converter(ll val, int base1, int base2) {
+string base_number_converter(string val, int base1, int base2) {
     // base1 進数の数val を base2進数の数res に変換する
-
-    // 各桁の数字を得る
-    vector<int> each_digit = num2vec(val);
 
     // base1 進数 を 10進数　に変換する
     ll ten_num = 0;
     ll ref = 1;
-    reverse(each_digit.begin(), each_digit.end());
-    for (int i = 0; i < each_digit.size(); i++) {
-        ten_num += ref * each_digit[i];
+    reverse(val.begin(), val.end());
+    for (int i = 0; i < val.size(); i++) {
+        ten_num += ref * (val[i] - '0');
         ref *= base1;
     }
 
     // 10 進数を base2 進数に変換する
-    vector<int> each_digit2;
-    while(ten_num > 0) {
-        each_digit2.push_back(ten_num % base2);
-        ten_num /= base2;
+    vector<int> each_digit;
+    if (ten_num == 0) each_digit.push_back(0);
+    else {
+        while(ten_num > 0) {
+            each_digit.push_back(ten_num % base2);
+            ten_num /= base2;
+        }
     }
 
-    reverse(each_digit2.begin(), each_digit2.end());
+    reverse(each_digit.begin(), each_digit.end());
 
-    ll res = vec2num(each_digit2);
+    string res;
+    for (auto a: each_digit) {
+        res.push_back(a + '0');
+    }
 
     return res;
 }
 
 
 int main() {
-    ll N;
+    string N;
     int K;
     cin >> N >> K;
 
@@ -69,12 +72,9 @@ int main() {
         // 8進数を9進数へ
         N = base_number_converter(N, 8, 9);
 
-        vector<int> nine = num2vec(N);
-        for (int j = 0; j < nine.size(); j++) {
-            if (nine[j] == 8) nine[j] = 5;
+        for (int j = 0; j < N.size(); j++) {
+            if (N[j] == '8') N[j] = '5';
         }
-
-        N = vec2num(nine);
 
     }
 
