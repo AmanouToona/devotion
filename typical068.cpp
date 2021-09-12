@@ -55,12 +55,12 @@ int main() {
     int N, Q;
     cin >> N >> Q;
     
-    vector<int> T(Q), X(Q), Y(Q), V(Q);
+    vector<ll> T(Q), X(Q), Y(Q), V(Q);
     for (int q = 0; q < Q; q++) cin >> T[q] >> X[q] >> Y[q] >> V[q];
     for (int q = 0; q < Q; q++) X[q]--, Y[q]--;
 
-    vector<vector<int>> G(N, vector<int>());
-    vector<vector<int>> sum(N, vector<int>(N));
+    vector<vector<ll>> G(N, vector<ll>());
+    map<pair<ll, ll>, ll> m;
     vector<bool> cango(N, false);
     for (int q = 0; q < Q; q++) {
         if (T[q] == 1) continue;
@@ -68,14 +68,16 @@ int main() {
         G[Y[q]].push_back(X[q]);
         cango[X[q]] = true;
         cango[Y[q]] = true;
-    
 
-        sum[X[q]][Y[q]] = V[q];
-        sum[Y[q]][X[q]] = V[q];
+        if (X[q] <= Y[q]) {
+            m[make_pair(X[q], Y[q])] = V[q];
+        } else {
+            m[make_pair(Y[q], X[q])] = V[q];
+        }
     }
 
     // クエリ先読み　解答準備
-    vector<int> Azero(N), Aone(N);
+    vector<ll> Azero(N), Aone(N);
     for (int n = 0; n < N; n++) {
         if (!cango[n]) continue;
 
@@ -93,8 +95,15 @@ int main() {
                 cango[v] = false;
                 q.push(v);
                 
-                Azero[v] = sum[u][v] - Azero[u];
-                Aone[v] = sum[u][v] - Aone[u];
+                ll sum_v;
+                if (u < v) {
+                    sum_v = m[make_pair(u, v)];
+                } else {
+                    sum_v = m[make_pair(v, u)];
+                }
+
+                Azero[v] = sum_v - Azero[u];
+                Aone[v] = sum_v - Aone[u];
             }
         }
     }
