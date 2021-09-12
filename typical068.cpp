@@ -56,8 +56,10 @@ int main() {
     cin >> N >> Q;
     
     vector<ll> T(Q), X(Q), Y(Q), V(Q);
-    for (int q = 0; q < Q; q++) cin >> T[q] >> X[q] >> Y[q] >> V[q];
-    for (int q = 0; q < Q; q++) X[q]--, Y[q]--;
+    for (int q = 0; q < Q; q++) {
+        cin >> T[q] >> X[q] >> Y[q] >> V[q];
+        X[q]--, Y[q]--;
+    }
 
     vector<vector<ll>> G(N, vector<ll>());
     map<pair<ll, ll>, ll> m;
