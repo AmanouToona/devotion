@@ -11,7 +11,7 @@ struct LCA {
         while ((1 << K) < G.size()) K++;
 
         parent.assign(K, vector<int>(G.size(), -1));
-        dist.assign(G.size(), -1);
+        dist.assign(G.size(),0);
         dfs(0, -1, 0, G);
 
         for (int k = 1; k < K; k++) {
@@ -73,6 +73,18 @@ int main() {
         G[B].push_back(A);
     }
 
+    vector<int> id(N, 0);
+    int d = 0;
+    function<void(int, int)> dfs =[&] (int v, int p) {
+        d++;
+        id[v] = d;
+        for (int u: G[v]) {
+            if (u == p) continue;
+            dfs(u, v);
+        }
+    };
+    dfs(0, 0);
+
     LCA lca(G);
 
     int Q;
@@ -88,11 +100,15 @@ int main() {
             V[k]--;
         }
 
-        if (K == 2) {
-            cout << lca.get_dist(V[0], V[1]) << endl;
-        } else if (K == 3) {
-            cout << (lca.get_dist(V[0], V[1]) + lca.get_dist(V[1], V[2]) + lca.get_dist(V[2], V[0])) / 2 << endl;
+        sort(V.begin(), V.end(),
+            [&] (int p, int q) -> bool {return id[p] < id[q];}
+        );
+
+        int ans = 0;
+        for (int i = 0; i < K; i++) {
+            ans += lca.get_dist(V[(i + K) % K], V[(i + 1 + K) % K]);
         }
+        cout << ans / 2 << endl;
 
     }
 
