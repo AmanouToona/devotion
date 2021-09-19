@@ -25,8 +25,6 @@ int main() {
         count_r[i] = pos + 1;
     }
 
-    reverse(count_r.begin(), count_r.end());
-
     int ans = 0;
     for (int i = 0; i < N; i++) {
         
