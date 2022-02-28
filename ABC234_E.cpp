@@ -18,7 +18,7 @@ int main() {
     cin >> X;
 
     vector<ll> anss;
-    for (ll i = 0; i < 18; i++) {
+    for (ll i = 0; i < 19; i++) {
         for (ll j = 1; j < 10; j++) {
             ll ans = 0;
             ll ii = i;
@@ -39,8 +39,8 @@ int main() {
                 ans += ss * pow_ll<ll>(10, dig);
                 dig++;
                 ss -= res;
+                if (ans > 10) anss.push_back(ans);
             }
-            if (ans > 10) anss.push_back(ans);
 
             ans = 0;
             ss = s;
@@ -49,8 +49,8 @@ int main() {
                 ans += ss * pow_ll<ll>(10, dig);
                 dig++;
                 ss += res;
+                if (ans > 10) anss.push_back(ans);
             }
-            if (ans > 10) anss.push_back(ans);
         }
     }
 
