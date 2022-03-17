@@ -13,7 +13,11 @@ int main() {
 
     for (int i = 0; i < N; i++) {
         for (int j = i + 1; j < N; j++) {
-            m[make_pair(X[i] - X[j], Y[i] - Y[j])]++;
+            if (X[i] <= X[j]) {
+                m[make_pair(X[i] - X[j], Y[i] - Y[j])]++;
+            } else {
+                m[make_pair(X[j] - X[i], Y[j] - Y[i])]++;
+            }
         }
     }
 
