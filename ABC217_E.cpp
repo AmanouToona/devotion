@@ -6,21 +6,31 @@ int main() {
     int Q;
     cin >> Q;
 
-    deque<int> A;
+    priority_queue<int, vector<int>, greater<int>> Aq;
+    deque<int> Ad;
+
     for (int i = 0; i < Q; i++) {
         int q;
         cin >> q;
-
         if (q == 1) {
             int x;
             cin >> x;
-            A.push_back(x);
+            Ad.push_back(x);
         } else if (q == 2) {
-            int x = A.front();
-            A.pop_front();
+            int x;
+            if (Aq.size() != 0) {
+                x = Aq.top();
+                Aq.pop();
+            } else {
+                x = Ad.front();
+                Ad.pop_front();
+            }
             cout << x << endl;
         } else if (q == 3) {
-            sort(A.begin(), A.end());
+            while (Ad.size() > 0) {
+                Aq.push(Ad.front());
+                Ad.pop_front();
+            }
         }
     }
 }
