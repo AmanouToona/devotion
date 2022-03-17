@@ -13,10 +13,16 @@ int main() {
 
     for (int i = 0; i < N; i++) {
         for (int j = i + 1; j < N; j++) {
-            if (X[i] <= X[j]) {
+            if (X[i] < X[j]) {
                 m[make_pair(X[i] - X[j], Y[i] - Y[j])]++;
-            } else {
+            } else if (X[i] != X[j]) {
                 m[make_pair(X[j] - X[i], Y[j] - Y[i])]++;
+            } else {
+                if (Y[i] > Y[j]) {
+                    m[make_pair(X[j] - X[i], Y[j] - Y[i])]++;
+                } else {
+                    m[make_pair(X[i] - X[j], Y[i] - Y[j])]++;
+                }
             }
         }
     }
