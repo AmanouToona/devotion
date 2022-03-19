@@ -19,20 +19,20 @@ struct SegmentTree {
     const T INF = numeric_limits<T>::max();
     const T MINF = numeric_limits<T>::min();  // minus inf
 
-    int n;           // 葉の数
+    ll n;           // 葉の数
     vector<T> data;  // 完全二分木の配列
 
-    SegmentTree(int n_) {
-        int x = 1;
+    SegmentTree(ll n_) {
+        ll x = 1;
         while (n_ > x) {
             x *= 2;
         }
         n = x;
         data.resize(2 * n - 1);
-        for (int i = 0; i < data.size(); i++) data[i] = INF;
+        for (ll i = 0; i < data.size(); i++) data[i] = INF;
     }
 
-    void update(int i, T x) {
+    void update(ll i, T x) {
         i += n - 1;
         data[i] = x;
         while (i > 0) {
@@ -41,13 +41,13 @@ struct SegmentTree {
         }
     }
 
-    T query(int a, int b) { return query_sub(a, b, 0, 0, n); }
-    T query_sub(int a, int b, int k, int l, int r) {
+    T query(ll a, ll b) { return query_sub(a, b, 0, 0, n); }
+    T query_sub(ll a, ll b, ll k, ll l, ll r) {
         // [a, b) の範囲が要求範囲
         // k: 現在見るノードの番号
         // 探索範囲 [l, r)
 
-        if (r <= a || l >= b) return 0;
+        if (r <= a || l >= b) return INF;
 
         if (a <= l && r <= b) return data[k];
         T value_l = query_sub(a, b, 2 * k + 1, l, (l + r) / 2);
@@ -59,33 +59,44 @@ struct SegmentTree {
 int main() {
     ll MOD = pow_ll(2, 20);
 
-    int Q;
+    ll Q;
     cin >> Q;
 
-    vector<int> A(MOD, -1);
-    SegmentTree<int> S(MOD);
-    for (int i = 0; i < MOD; i++) {
+    vector<ll> A(MOD, -1);
+    SegmentTree<ll> S(MOD);
+    for (ll i = 0; i < MOD; i++) {
         S.update(i, i);
     }
-    int INF = INT_MAX;
-    for (int i = 0; i < Q; i++) {
-        int t, x;
+    ll INF = numeric_limits<ll>::max();
+    for (ll i = 0; i < Q; i++) {
+        ll t, x;
         cin >> t >> x;
 
-        x--;
-        x %= MOD;
+        ll h = x;
+        h--;
+        h %= MOD;
 
         if (t == 1) {
-            int m;
-            int pos = S.query(x, MOD - 1);
+            ll m;
+            ll pos = S.query(h, MOD);
             if (pos == INF) {
-                pos = S.query(0, x);
+                pos = S.query(0, h);
             }
             A[pos] = x;
             S.update(pos, INF);
         } else {
-            int pos = x % MOD;
-            cout << A[pos] << endl;
+            cout << A[h] << endl;
         }
     }
 }
+
+/*
+4
+1 1048577
+1 1
+2 2097153
+2 3
+
+1048577
+-1
+*/
