@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
+#define mp(a, b) make_pair(a, b)
 
 class UnionFind {
     vector<int> p, rank, member_size;
@@ -52,46 +53,51 @@ int main() {
 
     vector<vector<int>> G(N + 1);
     map<pair<int, int>, int> m;
+
+    // 前処理
     for (int i = 0; i < Q; i++) {
         if (T[i] == 1) continue;
-        G[X[i]].push_back(Y[i]);
-        G[Y[i]].push_back(X[i]);
+        int x = X[i], y = Y[i], v = V[i];
 
-        if (X[i] < Y[i]) {
-            m[make_pair(X[i], Y[i])] = V[i];
-        } else {
-            m[make_pair(Y[i], X[i])] = V[i];
-        }
+        G[x].push_back(y);
+        G[y].push_back(x);
+
+        m[mp(x, y)] = v;
+        m[mp(y, x)] = v;
     }
 
-    vector<int> Azero(N + 1, INT_MAX), Aone(N + 1, INT_MAX);
+    vector<ll> Azero(N + 1, LLONG_MAX), Aone(N + 1);
     for (int i = 1; i <= N; i++) {
-        if (Azero[i] == INT_MAX) {
-            Azero[i] = 0;
-            Aone[i] = 1;
+        if (Azero[i] != LLONG_MAX) continue;
+        Azero[i] = 0;
+        Aone[i] = 1;
+
+        queue<pair<int, int>> q;
+        for (int v : G[i]) {
+            q.push(mp(i, v));
         }
 
-        for (int v : G[i]) {
-            int s;
-            if (v < i) {
-                s = m[make_pair(v, i)];
-            } else {
-                s = m[make_pair(i, v)];
-            }
+        while (!q.empty()) {
+            auto [u, v] = q.front();
+            q.pop();
 
-            if (Azero[v] != INT_MAX) {
-                Azero[i] = s - Azero[v];
-                Aone[i] = s - Aone[v];
-            } else {
-                Azero[v] = s - Azero[i];
-                Aone[v] = s - Aone[i];
+            if (Azero[v] != LLONG_MAX) continue;
+
+            int sum = m[mp(u, v)];
+            Azero[v] = sum - Azero[u];
+            Aone[v] = sum - Aone[u];
+
+            for (int nxt_v : G[v]) {
+                if (Azero[nxt_v] != LLONG_MAX) continue;
+                q.push(mp(v, nxt_v));
             }
         }
     }
 
+    // クエリ処理
     UnionFind uf(N + 1);
     for (int i = 0; i < Q; i++) {
-        int x = X[i], y = Y[i], v = V[i];
+        int x = X[i], y = Y[i], v = V[i], t = T[i];
 
         if (T[i] == 0) {
             uf.unite(x, y);
