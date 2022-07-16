@@ -18,7 +18,7 @@ def main():
     i = 1
     while i <= len(S):
         for j in range(26):
-            if len(S) - dp[j][i] > K - len(ans):
+            if len(S) - dp[j][i] >= K - len(ans) - 1:
                 i = dp[j][i] + 1
                 ans.append(chr(ord("a") + j))
                 break
