@@ -1,6 +1,8 @@
 import sys
 from collections import defaultdict
 
+sys.setrecursionlimit(10**6)
+
 
 def main():
     N, M = map(int, sys.stdin.readline().strip().split())
