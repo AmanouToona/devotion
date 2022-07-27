@@ -8,14 +8,13 @@ def main():
     for _ in range(N):
         xyh.append(tuple(map(int, sys.stdin.readline().strip().split())))
 
+    xyh.sort(key=lambda x: -x[-1])
+
     for cx in range(101):
         for cy in range(101):
             H = None
             is_ans = True
             for x, y, h in xyh:
-                if h == 0 and H is None:
-                    continue
-
                 if H is None:
                     H = h + abs(x - cx) + abs(y - cy)
                     continue
