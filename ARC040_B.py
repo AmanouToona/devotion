@@ -2,7 +2,7 @@ import sys
 
 
 def main():
-    N, R = map(int, sys.stdin.readline().strip().split())
+    _, R = map(int, sys.stdin.readline().strip().split())
     S = input()
     S = [s for s in S]
 
@@ -25,10 +25,13 @@ def main():
             ans += 1
             for i in range(R):
                 S[pos + i] = "o"
-        elif pos + R - 1 == right_white:
-            ans += 1
 
-        if pos + R - 1 == right_white:
+        elif pos + R - 1 >= right_white:
+            ans += 1
+            for i in range(R):
+                S[pos + i] = "o"
+
+        if S[right_white] == "o":
             print(ans)
             return
 
