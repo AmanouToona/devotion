@@ -15,6 +15,10 @@ def main():
     weight_sum = 0
     to = 0
     for fr0m in range(N):
+        if x == 0:
+            nxt[fr0m] = fr0m
+            continue
+
         while weight_sum < x:
             weight_sum += W[to]
             to += 1
@@ -37,7 +41,7 @@ def main():
     potato_amount = [-1] * N
     for i in range(N):
         amount = nxt[i] - i
-        if amount <= 0:
+        if amount <= 0 and x != 0:
             amount += N
         amount += N * (X // w_sum)
         potato_amount[i] = amount
