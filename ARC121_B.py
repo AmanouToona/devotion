@@ -34,7 +34,6 @@ def main():
         even_color = "B"
 
     odd_colors = []
-
     for color in ["R", "G", "B"]:
         if color == even_color:
             continue
@@ -43,39 +42,26 @@ def main():
     AC.sort()
 
     def search_min_diff(color1, color2):
-        res = float("inf")
+        def _search(c1, c2):
+            res = float("inf")
+            right = 0
+            for left in range(len(AC) - 1):
+                if AC[left][1] != c1:
+                    continue
+                if right <= left:
+                    right = left + 1
 
-        right = 0
-        for left in range(len(AC) - 1):
-            if AC[left][1] != color1:
-                continue
+                while right + 1 < len(AC) and AC[right][1] != c2:
+                    right += 1
 
-            if right <= left:
-                right = left + 1
+                if AC[right][1] != c2:
+                    break
 
-            while right + 1 < len(AC) and AC[right][1] != color2:
-                right += 1
+                res = min(res, AC[right][0] - AC[left][0])
 
-            if AC[right][1] != color2:
-                continue
+            return res
 
-            res = min(res, AC[right][0] - AC[left][0])
-
-        for left in range(len(AC) - 1):
-            if AC[left][1] != color2:
-                continue
-
-            if right <= left:
-                right = left + 1
-
-            while right + 1 < len(AC) and AC[right][1] != color1:
-                right += 1
-
-            if AC[right][1] != color1:
-                continue
-
-            res = min(res, AC[right][0] - AC[left][0])
-
+        res = min(_search(color1, color2), _search(color2, color1))
         return res
 
     ans = search_min_diff(odd_colors[0], odd_colors[1])
