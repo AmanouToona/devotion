@@ -24,6 +24,7 @@ def main():
         dp[n][1] = min(dp[n - 1][1] + A[n - 1], dp[n - 1][0] + A[n - 1])
 
     ans = min(ans, dp[N - 1][0] + A[-1])
+    ans = min(ans, dp[N - 1][1] + A[-1])
     print(ans)
 
     return
@@ -31,4 +32,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-19921107
