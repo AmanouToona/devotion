@@ -5,7 +5,7 @@ def main():
     N = int(input())
     A = list(map(int, sys.stdin.readline().strip().split()))
 
-    # dp[n][i] := 動物 n まで見た, i: bool ={0: エサやってない, 1: エサやった} の最初コスト
+    # dp[n][i] := 動物 n まで見た, i: bool ={0: エサやってない, 1: エサやった} の最小コスト
     dp = [[float("inf")] * 2 for _ in range(N)]
 
     # A0 を選択した場合
@@ -14,7 +14,7 @@ def main():
         dp[n][0] = dp[n - 1][1]
         dp[n][1] = min(dp[n - 1][1] + A[n - 1], dp[n - 1][0] + A[n - 1])
 
-    ans = dp[N - 1][1]
+    ans = min(dp[N - 1][1], dp[N - 1][0] + A[-1])
 
     # A0 を選択しない場合
     dp = [[float("inf")] * 2 for _ in range(N)]
