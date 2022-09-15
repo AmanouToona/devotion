@@ -22,7 +22,7 @@ def main():
         dist[u] = 0
 
         while q:
-            u = q.pop()
+            u = q.popleft()
 
             for v in g[u]:
                 if dist[v] >= 0:
@@ -41,25 +41,21 @@ def main():
     q.append(u)
     d_taka[u] = 0
     while q:
-        u = q.pop()
+        u = q.popleft()
 
         for v in g[u]:
             if d_taka[v] > 0:
                 continue
-            dist = d_taka[u] + 1
-            if dist > d_ao[v]:
-                continue
-            if dist == d_ao[v]:
-                d_taka[v] = dist
+            d_taka[v] = d_taka[u] + 1
+            if d_taka[v] >= d_ao[v]:
                 continue
 
-            d_taka[v] = dist
             q.append(v)
 
     # 答え
     ans = 0
     for i in range(N):
-        if d_taka[i] > d_ao[i]:
+        if d_taka[i] < 0:
             continue
 
         ans = max(ans, d_ao[i] - 1)
