@@ -40,6 +40,14 @@ def main():
             if cut:
                 count_white = count_white_
 
+            for c in count_white:
+                if c > K:
+                    w_cut = float("inf")
+                    break
+            else:
+                continue
+            break
+
         ans = min(ans, h_cut + w_cut)
     print(ans)
     return
