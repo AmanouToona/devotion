@@ -2,31 +2,51 @@ import sys
 
 
 def main():
-    N = int(input())
+    _ = int(input())
     D = list(map(int, sys.stdin.readline().strip().split()))
 
-    # 鳩の巣原理より
-    if N >= 24:
+    d_pop = [0] * 13
+    for d in D:
+        d_pop[d] += 1
+
+    # 高橋君は時刻0
+    d_pop[0] += 1
+
+    # 0, 12 時は 2人いた時点で 0
+    if d_pop[0] > 1 or d_pop[12] > 1:
         print(0)
         return
 
-    # 高橋君を含め 最大で 24 人の時刻を調べればよい
+    # 3人以上いる場合も 0
+    for d in d_pop:
+        if d >= 3:
+            print(0)
+            return
+
     ans = 0
-    for b in range(1 << N):
-        time = [0]
-        for i, d in enumerate(D):
-            if (b >> i) & 1:
-                time.append(d)
+    for bit in range(1 << 10):
+        times = [0]
+        if d_pop[12] != 0:
+            times.append(12)
+
+        for i in range(11):
+            if d_pop[i + 1] == 0:
+                continue
+            if d_pop[i + 1] == 2:
+                times.append(i + 1)
+                times.append(24 - (i + 1))
+                continue
+            if (bit >> i) & 1:
+                times.append(i + 1)
             else:
-                time.append(24 - d)
+                times.append(24 - (i + 1))
 
-        if len(set(time)) != len(time):
-            continue
+        times.sort()
 
-        time.sort()
         min_diff = float("inf")
-        for i in range(len(time)):
-            diff = abs(time[(i + 1) % len(time)] - time[i])
+        for i in range(len(times)):
+            diff = times[(i + 1) % len(times)] - times[i]
+            diff = abs(diff)
             min_diff = min(min_diff, diff, 24 - diff)
 
         ans = max(ans, min_diff)
@@ -38,4 +58,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
