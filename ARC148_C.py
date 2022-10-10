@@ -14,7 +14,6 @@ def solve(G, P):
         if v == 0:
             continue
 
-        v -= 1
         p = P[v]
         if p in V:
             cnt -= 2
@@ -26,12 +25,14 @@ def solve(G, P):
 
 def main():
     N, Q = map(int, sys.stdin.readline().strip().split())
-    P = list(map(int, sys.stdin.readline().strip().split()))
-
+    P = [0]
+    P.extend(list(map(int, sys.stdin.readline().strip().split())))
     P = [p - 1 for p in P]
+
     G = [[] for _ in range(N)]
     for i, p in enumerate(P):
-        i += 1
+        if p < 0:
+            continue
         G[p].append(i)
 
     for _ in range(Q):
