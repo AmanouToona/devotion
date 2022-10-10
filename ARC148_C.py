@@ -1,7 +1,7 @@
 import sys
 
 
-def solve(G):
+def solve(G, P):
     _, *V = list(map(int, sys.stdin.readline().strip().split()))
     V = [v - 1 for v in V]
     V = set(V)
@@ -11,9 +11,12 @@ def solve(G):
         cnt += 1
         cnt += len(G[v])
 
-        for nxt in G[v]:
-            if nxt not in V:
-                continue
+        if v == 0:
+            continue
+
+        v -= 1
+        p = P[v]
+        if p in V:
             cnt -= 2
 
     print(cnt)
@@ -32,7 +35,7 @@ def main():
         G[p].append(i)
 
     for _ in range(Q):
-        solve(G)
+        solve(G, P)
 
     return
 
