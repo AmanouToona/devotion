@@ -28,7 +28,7 @@ def main():
                 dp[i + 1][0][(d + j) % D] %= MOD
                 dp[i + 1][1][(d + j) % D] %= MOD
 
-    print(dp[-1][1][0] - 1)
+    print(dp[-1][1][0] + dp[-1][0][0] - 1)  # -1 は N >= 1 より N==0 を除くため
 
     return
 
