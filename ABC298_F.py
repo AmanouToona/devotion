@@ -1,5 +1,4 @@
 import sys
-from typing import Any
 
 
 class CoordinateCompression:
@@ -18,6 +17,7 @@ class CoordinateCompression:
 
     def __getitem__(self, x) -> int:
         if not self.compression:
+            # call self.produce before getitem
             raise Exception
         return self.compression[x]
 
@@ -44,17 +44,25 @@ def main():
     R.produce()
     C.produce()
 
-    board = [[0] * len(C) for _ in range(len(R))]
-    for r, c, x in rcx:
-        board[R[r]][C[c]] = x
+    R_sum = [0] * len(R)
+    C_sum = [0] * len(C)
+    board = dict()
 
-    R_sum = [sum(i) for i in board]
-    C_sum = [sum(i) for i in zip(*board)]
+    for r, c, x in rcx:
+        R_sum[R[r]] += x
+        C_sum[C[c]] += x
+        board[(R[r], C[c])] = x
+
+    C_sum_idx = [(i, j) for j, i in enumerate(C_sum)]
+    C_sum_idx.sort(key=lambda x: -x[0])
 
     ans = 0
     for r in range(len(R)):
-        for c in range(len(C)):
-            ans = max(ans, R_sum[r] + C_sum[c] - board[r][c])
+        for c_val, c_idx in C_sum_idx:
+            if (r, c_idx) not in board.keys():
+                ans = max(ans, R_sum[r] + c_val)
+                break
+            ans = max(ans, R_sum[r] + c_val - board[(r, c_idx)])
 
     print(ans)
     return
