@@ -1,6 +1,8 @@
 import sys
 from collections import defaultdict, deque
 
+sys.setrecursionlimit(10**8)
+
 
 def main():
     N = int(input())
