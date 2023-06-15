@@ -21,22 +21,18 @@ def main():
         p -= 1
 
         heapq.heappush(q, (-h, p))
-        num[p] = h
 
     while q:
         h, u = heapq.heappop(q)
 
-        h *= -1
-        if h < num[u]:
+        if num[u] >= -h:
             continue
+        num[u] = -h
 
         for v in g[u]:
             if num[v] >= num[u]:
                 continue
-            num[v] = num[u] - 1
-            if num[v] == 0:
-                continue
-            heapq.heappush(q, (-num[v], v))
+            heapq.heappush(q, (-(num[u] - 1), v))
 
     ans = []
     for i, n in enumerate(num):
