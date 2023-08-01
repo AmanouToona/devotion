@@ -12,19 +12,19 @@ def main():
     fp = set()
 
     def search_loop(u):
-        _fp = [False] * N  # foot print
+        _fp = set()
 
         def _search_loop(u):
             if u in loop:
                 return
 
-            if _fp[u]:
+            if u in _fp:
                 return u
             if u in fp:
                 return
             fp.add(u)
+            _fp.add(u)
 
-            _fp[u] = True
             nxt = A[u]
             return _search_loop(nxt)
 
