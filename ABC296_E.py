@@ -16,20 +16,21 @@ def main():
         if ord[u] != 0:
             continue
 
-        k += 1
-        ord[u] = k
-
-        v = A[u]
+        v = u
         while ord[v] == 0:
             k += 1
             ord[v] = k
 
             v = A[v]
 
-        if ord[v] < ord[u]:
-            continue
+            if ord[v] == 0:
+                continue
 
-        ans += k - ord[v] + 1
+            if ord[v] < ord[u]:
+                break
+
+            ans += k - ord[v] + 1
+            break
 
     print(ans)
     return
