@@ -8,45 +8,30 @@ def main():
     A = list(map(int, sys.stdin.readline().strip().split()))
     A = [a - 1 for a in A]
 
-    loop = set()
-    fp = set()
+    ord = [0] * N
+    k = 0
 
-    def search_loop(u):
-        _fp = set()
-
-        def _search_loop(u):
-            if u in loop:
-                return
-
-            if u in _fp:
-                return u
-            if u in fp:
-                return
-            fp.add(u)
-            _fp.add(u)
-
-            nxt = A[u]
-            return _search_loop(nxt)
-
-        start = _search_loop(u)
-
-        if start is None:
-            return
-
-        p = start
-
-        while p not in loop:
-            loop.add(p)
-            p = A[p]
-
+    ans = 0
     for u in range(N):
-        if u in loop:
+        if ord[u] != 0:
             continue
-        if u in fp:
-            continue
-        search_loop(u)
 
-    print(len(loop))
+        k += 1
+        ord[u] = k
+
+        v = A[u]
+        while ord[v] == 0:
+            k += 1
+            ord[v] = k
+
+            v = A[v]
+
+        if ord[v] < ord[u]:
+            continue
+
+        ans += k - ord[v] + 1
+
+    print(ans)
     return
 
 
