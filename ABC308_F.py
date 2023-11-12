@@ -6,14 +6,13 @@ sys.setrecursionlimit(10**8)
 
 
 def main():
-    N, M = map(int, sys.stdin.readline().strip().split())
+    _, _ = map(int, sys.stdin.readline().strip().split())
     P = list(map(int, sys.stdin.readline().strip().split()))
     L = list(map(int, sys.stdin.readline().strip().split()))
     D = list(map(int, sys.stdin.readline().strip().split()))
 
     coupon = [(l, d) for l, d in zip(L, D)]
-    coupon.sort(key=lambda x: x[0])
-    coupon.sort(key=lambda x: -x[1])
+    coupon.sort(key=lambda x: (-x[1], x[0]))
 
     itm = SortedList(P)
 
@@ -27,8 +26,7 @@ def main():
         value = itm.pop(pos)
         ans += value - d
 
-    while itm:
-        ans += itm.pop()
+    ans += sum(itm)
 
     print(ans)
 
