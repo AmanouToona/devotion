@@ -12,8 +12,8 @@ def main():
     D = list(map(int, sys.stdin.readline().strip().split()))
 
     coupon = [(l, d) for l, d in zip(L, D)]
+    coupon.sort(key=lambda x: x[0])
     coupon.sort(key=lambda x: -x[1])
-    coupon.sort(key=lambda x: -x[0])
 
     itm = SortedList(P)
 
