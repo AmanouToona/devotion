@@ -1,5 +1,5 @@
-import copy
 import sys
+from itertools import permutations
 
 sys.setrecursionlimit(10**8)
 
@@ -34,55 +34,13 @@ class BinaryIndexedTree:
 def main():
     H, W = map(int, sys.stdin.readline().strip().split())
 
-    A = []
-    for _ in range(H):
-        A.append(list(map(int, sys.stdin.readline().strip().split())))
-
-    col_no = dict()
-    row_no = dict()
-
-    for i, a in enumerate(A):
-        a = copy.copy(a)
-        a.sort()
-        a = tuple(a)
-        col_no[a] = i + 1
-
-    for i, a in enumerate(zip(*A)):
-        a = list(copy.copy(a))
-        a.sort()
-        a = tuple(a)
-        row_no[a] = i + 1
-
-    B = []
-    for _ in range(H):
-        B.append(list(map(int, sys.stdin.readline().strip().split())))
-
-    b_col_no = []
-    for b in B:
-        b = copy.copy(b)
-        b.sort()
-        b = tuple(b)
-
-        if b not in col_no.keys():
-            print(-1)
-            return
-
-        b_col_no.append(col_no[b])
-
-    b_row_no = []
-    for b in zip(*B):
-        b = list(copy.copy(b))
-        b.sort()
-        b = tuple(b)
-
-        if b not in row_no.keys():
-            print(-1)
-            return
-
-        b_row_no.append(row_no[b])
+    A = [list(map(int, sys.stdin.readline().strip().split())) for _ in range(H)]
+    B = [list(map(int, sys.stdin.readline().strip().split())) for _ in range(H)]
 
     # 転倒数の和
     def count_inv_num(lis):
+        lis = list(lis)
+        lis = [i + 1 for i in lis]
         bit = BinaryIndexedTree(10)
 
         res = 0
@@ -93,8 +51,23 @@ def main():
 
         return res
 
-    ans = count_inv_num(b_col_no) + count_inv_num(b_row_no)
-    print(ans)
+    for col in permutations([i for i in range(W)]):
+        for row in permutations([i for i in range(H)]):
+            is_ans = True
+            for i, c in enumerate(col):
+                for j, r in enumerate(row):
+                    if A[r][c] != B[j][i]:
+                        is_ans = False
+                        break
+
+                if not is_ans:
+                    break
+            if is_ans:
+                ans = count_inv_num(col) + count_inv_num(row)
+                print(ans)
+                return
+
+    print(-1)
 
     return
 
