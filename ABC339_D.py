@@ -16,18 +16,18 @@ def main():
                 continue
             p.append((i, j))
 
-    def is_in_grid(c, r):
+    def is_in_grid(r, c):
         if c < 0 or c >= N:
             return False
         if r < 0 or r >= N:
             return False
         return True
 
-    def can_move(c, r):
-        if not is_in_grid(c, r):
+    def can_move(r, c):
+        if not is_in_grid(r, c):
             return False
 
-        if S[c][r] == "#":
+        if S[r][c] == "#":
             return False
         return True
 
@@ -35,40 +35,39 @@ def main():
         print(0)
         return
 
-    state = {tuple(p): 0}
-    q = deque([tuple(p)])
+    # r1, c1, r2, c2 の移動コスト
+    init = 10**9
+    cost = [[[[init for _ in range(N)] for _ in range(N)] for _ in range(N)] for _ in range(N)]
+    cost[p[0][0]][p[0][1]][p[1][0]][p[1][1]] = 0
+
+    q = deque([tuple([p[0][0], p[0][1], p[1][0], p[1][1]])])
 
     while q:
-        u = q.popleft()
-        p1, p2 = u
-        uc_p1, ur_p1 = p1
-        uc_p2, ur_p2 = p2
+        r1, c1, r2, c2 = q.popleft()
 
-        for dc, dr in zip([1, 0, -1, 0], [0, 1, 0, -1]):
-            vc_p1 = uc_p1 + dc
-            vc_p2 = uc_p2 + dc
+        for dr, dc in zip([1, 0, -1, 0], [0, 1, 0, -1]):
+            nxt_r1 = r1 + dr
+            nxt_c1 = c1 + dc
 
-            vr_p1 = ur_p1 + dr
-            vr_p2 = ur_p2 + dr
+            nxt_r2 = r2 + dr
+            nxt_c2 = c2 + dc
 
-            if not can_move(c=vc_p1, r=vr_p1):
-                vc_p1 = uc_p1
-                vr_p1 = ur_p1
+            if not can_move(r=nxt_r1, c=nxt_c1):
+                nxt_r1 = r1
+                nxt_c1 = c1
 
-            if not can_move(c=vc_p2, r=vr_p2):
-                vc_p2 = uc_p2
-                vr_p2 = ur_p2
+            if not can_move(r=nxt_r2, c=nxt_c2):
+                nxt_r2 = r2
+                nxt_c2 = c2
 
-            v = ((vc_p1, vr_p1), (vc_p2, vr_p2))
-
-            if v in state.keys():
+            if cost[nxt_r1][nxt_c1][nxt_r2][nxt_c2] != init:
                 continue
 
-            state[v] = state[u] + 1
-            q.append(v)
+            cost[nxt_r1][nxt_c1][nxt_r2][nxt_c2] = cost[r1][c1][r2][c2] + 1
+            q.append((nxt_r1, nxt_c1, nxt_r2, nxt_c2))
 
-            if v[0] == v[1]:
-                print(state[v])
+            if nxt_r1 == nxt_r2 and nxt_c1 == nxt_c2:
+                print(cost[nxt_r1][nxt_c1][nxt_r2][nxt_c2])
                 return
 
     print(-1)
